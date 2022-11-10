@@ -21,7 +21,7 @@
  - Noor : handle multi task,work under pressure , Computer Skills.
  - Dina : handle multi task ,work under pressure,Computer Skills ,Communication skill.
  - Mohannad : Very Good Technical Knowledge ,Computer Skills ,Communication skill.
- - Abdallah: 	Flexible to work in different time or travel,Computer Skills ,work under pressure
+ - Abdallah: 	Flexible to work in different time,Computer Skills ,work under pressure
  
 2. How can you best utilize these strengths in the execution of your project?
 
