@@ -103,11 +103,15 @@
      discord 
 
 
+## Domain Modeling
+![Modeling](./img/Domain%20Modeling.PNG)
+
+## Wireframes 
+![Wireframes ](./img/Wireframes%20.png)
+
+
 
 ### Links and Resources
-
-- Link01
-- Link02
 
 ### Setup
 
