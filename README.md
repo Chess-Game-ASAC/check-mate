@@ -119,8 +119,8 @@ i.e.
 - `DATABASE_URL` - URL to the running Postgres instance/db
 
 #### How to initialize/run your application (where applicable)
- 1. pip freeze > requirements.txt 
- 2. e.g. `python main.py`
+ 1. pip install -r requirements.txt
+ 2. e.g.  run `main.py` file 
 
 #### How to use your library (where applicable)
 
