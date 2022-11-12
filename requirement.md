@@ -59,3 +59,19 @@ List the functionality of your product. This will consist of tasks such as the f
 2.  we can test all functions, cause we using GUI 
 3.  we can test any thing we want like board , pieces, and available move .
 
+
+## User Story
+## Title : CheckMate 
+## User Story sentence : 
+1. As a user, I want to play with me friend so that I can beat them 
+2. As a user, I want to choose black pieces so that I can't  control  the white pieces
+3. As a user, I want to chose black pieces so that I can move the knight piece like L move or bishop like a diagonal move
+## Feature Tasks :
+1. The user can choess the white or black 
+2. The user can move any piescs that he chose in same color
+3. The user can hear a sound if the other player takes any pieces
+## Acceptance Tests :
+1. Ensure that the all pieces move according to acceptable movement
+2. Enuser if the king is under attack the user can only move the pieces to protect the king
+3. Ensure if the king stalemate show the user win or defeat
+
