@@ -60,7 +60,7 @@ List the functionality of your product. This will consist of tasks such as the f
 3.  we can test any thing we want like board , pieces, and available move .
 
 
-## User Story
+## User Stories
 ## Title : CheckMate 
 ## User Story sentence : 
 1. As a user, I want to play with me friend so that I can beat them 
