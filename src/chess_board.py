@@ -1,6 +1,6 @@
 from chess_piece import *
 class PiecePlace:
-        def init(self,row,col,piece=None):
+        def __init__(self,row,col,piece=None):
             self.row=row 
             self.col=col
             self.piece=piece
@@ -8,7 +8,7 @@ class PiecePlace:
         def has_piece(self):
             return self.piece !=None
 class Board:
-    def init(self):
+    def __init__(self):
         self.Piece_Arr = []
         for col in range(8):
           self.Piece_Arr.append([0, 0, 0, 0, 0, 0, 0, 0])
