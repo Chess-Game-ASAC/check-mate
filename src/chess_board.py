@@ -1,4 +1,5 @@
 from chess_piece import *
+
 class PiecePlace:
         def __init__(self,row,col,piece=None):
             '''
