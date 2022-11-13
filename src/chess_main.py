@@ -13,7 +13,7 @@ class Main:
     pygame.init()     # to initialize pygame library
     self.screen = pygame.display.set_mode( (600,600) )     #create screen attribute (width,hight)
     pygame.display.set_caption('Check Mate')     # add the title of the screen
-    self.game=Game()
+    self.game=Game() 
     
   def mainloop(self):
     """
@@ -24,8 +24,10 @@ class Main:
     
     """
     while True:
+      
       self.game.show_background(self.screen)
       self.game.show_pieces(self.screen)
+
       for event in pygame.event.get():
         if event.type == pygame.QUIT:
           pygame.quit()

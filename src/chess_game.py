@@ -14,17 +14,20 @@ class Game:
         '''the function to draw the board'''
 
         for row in range(8):
+
             for col in range(8):
+
                 if (row+col)%2==0:
-                    color=(230, 186, 149)
+                    color = (230, 186, 149) 
                 else :
-                    color= (251, 250, 205) 
-                rect=(col*75,row*75,75,75)
+                    color = (251, 250, 205) 
+                
+                rect = (col*75,row*75,75,75) # tuple (x,y,W,H)
                 pygame.draw.rect(surface,color,rect)
 
 
     def show_pieces(self,surface):
-        
+
         for row in range(8):
           for col in range(8):
             if self.board.Piece_Arr[row][col].has_piece():
