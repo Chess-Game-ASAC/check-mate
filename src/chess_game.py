@@ -2,10 +2,17 @@ import pygame
 from chess_board import Board
 
 class Game:
+
+    ''' the game class response to rendering method'''
+
     def __init__(self):
         self.board=Board()
-  #show methods
-    def show_bg(self ,surface):
+
+
+    def show_background(self ,surface):
+
+        '''the function to draw the board'''
+
         for row in range(8):
             for col in range(8):
                 if (row+col)%2==0:
@@ -17,6 +24,7 @@ class Game:
 
 
     def show_pieces(self,surface):
+        
         for row in range(8):
           for col in range(8):
             if self.board.Piece_Arr[row][col].has_piece():
