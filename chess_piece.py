@@ -9,7 +9,7 @@ class Piece:
         self.name=name   #the name of piece
         self.color=color #the color of piece
         self.image=image #the path of pecies image 
-        self.set_image()
+        self.set_image() # put the path in self.image
         self.image_rect=image_rect
 
     def set_image(self):

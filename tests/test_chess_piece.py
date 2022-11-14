@@ -1,6 +1,6 @@
 #test the chess pecies file 
-from src.chess_piece import *
-
+from chess_piece import *
+import pytest
 #test the white pecies
 def test_King():
     king=King( "white")

@@ -23,12 +23,15 @@ class Main:
     3. responsible of calling all other classes
     
     """
+    
     while True:
       
       self.game.show_background(self.screen)
       self.game.show_pieces(self.screen)
 
       for event in pygame.event.get():
+
+        # quite the check mate game  
         if event.type == pygame.QUIT:
           pygame.quit()
           sys.exit()
