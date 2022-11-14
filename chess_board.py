@@ -1,4 +1,6 @@
+
 from chess_piece import *
+
 
 class PiecePlace:
         def __init__(self,row,col,piece=None):
@@ -7,7 +9,7 @@ class PiecePlace:
             '''
             self.row=row 
             self.col=col
-            self.piece=piece
+            self.piece=piece # is object
 
         def has_piece(self):
             '''
@@ -73,3 +75,14 @@ class Board:
         # bishops
         self.Piece_Arr[second_row][2] = PiecePlace(second_row, 2, Bishop(color))
         self.Piece_Arr[second_row][5] = PiecePlace(second_row, 5, Bishop(color))
+
+if __name__ =="__main__":
+    board=Board()
+    print(board.Piece_Arr[0][0]. has_piece())
+    print(board.Piece_Arr[5][5]. has_piece())
+    print(board.Piece_Arr[0][0].piece.image)
+    print(board.Piece_Arr[7][1].piece.image)
+    print(board.Piece_Arr[7][1].piece.color)
+    print(board.Piece_Arr[0][1].piece.color)
+    print(board.Piece_Arr[0][4].piece.name)
+    print(board.Piece_Arr[1][5].piece.name)
