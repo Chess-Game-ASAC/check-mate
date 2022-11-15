@@ -3,7 +3,7 @@ class Piece:
     """
     This class to create the chess pieces have :
     4 attribute : name,color,image,imag_rect
-    1 method    
+    1 method    :set_image()
     """
     def __init__(self,name,color,image=None,image_rect=None): 
         self.name=name   #the name of piece

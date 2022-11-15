@@ -10,8 +10,10 @@ class Main:
 
   def __init__(self):
     """ Initialize the game, and create resources. """
+
     pygame.init()     # to initialize pygame library
     self.screen = pygame.display.set_mode( (600,600) )     #create screen attribute (width,hight)
+    
     pygame.display.set_caption('Check Mate')     # add the title of the screen
     self.game=Game() 
     
@@ -25,11 +27,48 @@ class Main:
     """
     
     while True:
+      motion=self.game.motion  #call the motion attribute in the game class which is object "Motion class"
+      board=self.game.board  #call the board attribute in the game class which is object "Board class"
       
-      self.game.show_background(self.screen)
-      self.game.show_pieces(self.screen)
+      self.game.show_background(self.screen)  #display the board
+      self.game.show_pieces(self.screen) #put the pieces on the board
 
-      for event in pygame.event.get():
+      if motion.piece is not None and motion.M_col is not None and motion.M_row is not None:
+        motion.update_screen(self.screen)
+
+
+      for event in pygame.event.get():   #loop through the event
+
+        # click event to select the piece need to move 
+        if event.type ==pygame.MOUSEBUTTONDOWN:
+          col,row=event.pos
+          col=col//75
+          row=row//75
+          motion.update(row,col) 
+
+          if board.Piece_Arr[row][col].has_piece():
+            motion.save_piece(board.Piece_Arr[row][col].piece)
+            
+
+        # mouse motion event to move the piece in specifiic square 
+        if event.type ==pygame.MOUSEMOTION:
+          col,row=event.pos
+          # motion.new_postion(row,col)
+          if motion.piece is not None:
+            motion.MouseMotion(col,row)
+            motion.update_screen(self.screen)
+           
+
+        # releasing your click event 
+        if event.type == pygame.MOUSEBUTTONUP:
+          col,row=event.pos
+          col=col//75
+          row=row//75
+          
+          board.Piece_Arr[motion.row_x][motion.col_y].piece=None
+          board.Piece_Arr[row][col].piece=motion.piece
+          motion.delete_piece()
+
 
         # quite the check mate game  
         if event.type == pygame.QUIT:
