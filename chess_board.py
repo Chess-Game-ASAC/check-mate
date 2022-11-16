@@ -198,7 +198,7 @@ class Board:
         # queen
 
         self.Piece_Arr[second_row][3] = PiecePlace(second_row, 3, Queen(color))
-
+        self.Piece_Arr[4][4] = PiecePlace(4, 4, Queen("white"))
         # knights
         self.Piece_Arr[second_row][1] = PiecePlace(second_row, 1, Knight(color))
         self.Piece_Arr[second_row][6] = PiecePlace(second_row, 6, Knight(color))
