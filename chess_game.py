@@ -48,3 +48,20 @@ class Game:
                    # print("4444444",piece.image_rect)
                    # blit() is function in pygame to draw one image into another
                    surface.blit(img, piece.image_rect)
+    
+    def show_possible_move(self, surface):
+        '''
+        this method to show the possible move for each pieces 
+        '''
+        if self.motion.moving :
+            piece = self.motion.piece
+      
+            # loop all valid moves
+            for move in piece.moves:
+                # color
+                color = "#e9ed11"            
+                # rect
+                rect = (move.end.col * 75, move.end.row * 75, 75, 75)
+                # blit
+                pygame.draw.rect(surface, color, rect)
+

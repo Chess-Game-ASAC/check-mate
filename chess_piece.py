@@ -11,7 +11,9 @@ class Piece:
         self.image=image #the path of pecies image 
         self.set_image() # put the path in self.image
         self.image_rect=image_rect
-
+        self.moves= []
+    def append_move(self,move):
+        self.moves.append(move)
     def set_image(self):
         """
         this methode to creat the path of the pecie image 

@@ -31,8 +31,9 @@ class Main:
       board=self.game.board  #call the board attribute in the game class which is object "Board class"
       
       self.game.show_background(self.screen)  #display the board
+      
       self.game.show_pieces(self.screen) #put the pieces on the board
-
+      
       if motion.piece is not None and motion.M_col is not None and motion.M_row is not None:
         motion.update_screen(self.screen)
 
@@ -47,8 +48,10 @@ class Main:
           motion.update(row,col) 
 
           if board.Piece_Arr[row][col].has_piece():
+            board.possible_moves(board.Piece_Arr[row][col].piece,row,col)
             motion.save_piece(board.Piece_Arr[row][col].piece)
-            
+            # self.game.show_background(self.screen)
+            self.game.show_possible_move(self.screen)
 
         # mouse motion event to move the piece in specifiic square 
         if event.type ==pygame.MOUSEMOTION:
@@ -57,6 +60,7 @@ class Main:
           if motion.piece is not None:
             motion.MouseMotion(col,row)
             motion.update_screen(self.screen)
+            self.game.show_possible_move(self.screen)
            
 
         # releasing your click event 
