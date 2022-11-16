@@ -88,4 +88,3 @@ class Main:
 
 main=Main()
 main.mainloop()
-

@@ -81,25 +81,85 @@ class Board:
                     end = PiecePlace(knight_move_row,knight_move_colum)
                     move= Move(start,end)
                     pices.append_move(move)
+    
+      
+    def possible_moves(self, piece ,row , colum):
+        def straightline_moves(incrs):
+            for incr in incrs:
+                row_incr, col_incr = incr
+                possible_move_row = row + row_incr
+                possible_move_col = colum + col_incr
 
+                while True:
+                    if self.in_board(possible_move_row, possible_move_col):
+                        # create squares of the possible new move
+                        initial = PiecePlace(row, colum)
+                        final_piece = self.Piece_Arr[possible_move_row][possible_move_col].piece
+                        final = PiecePlace(possible_move_row, possible_move_col, final_piece)
+                        # create a possible new move
+                        move = Move(initial, final)
 
-    def possible_moves(self, pices ,row , colum):
+                        # empty = continue looping
+                        if self.Piece_Arr[possible_move_row][possible_move_col].empty_square():
+                           
+                            piece.append_move(move)
+                        
+
+                        # has enemy piece = add move + break
+                        elif self.Piece_Arr[possible_move_row][possible_move_col].enemies_piece(piece.color):
+                            piece.append_move(move)
+                            
+                            break
+
+                        # has team piece = break
+                        elif self.Piece_Arr[possible_move_row][possible_move_col].has_partners_piece(piece.color):
+                            
+                            break
+                    
+                    # not in range
+                    else: break
+
+                    # incrementing incrs
+                    possible_move_row = possible_move_row + row_incr
+                    possible_move_col = possible_move_col + col_incr
         '''
         this mthod to suggestion the possible move for the each pices when you need to move it 
 
         '''
-        if pices.name == "knight":
-            self.knight_possible_move( pices ,row , colum)
-        if pices.name == "pawn":
+        if piece.name == "knight":
+            self.knight_possible_move( piece ,row , colum)
+        if piece.name == "pawn":
             pass
-        if pices.name == "king":
+        if piece.name == "king":
             pass
-        if pices.name == "rook":
-            pass
-        if pices.name == "queen":
-            pass
-        if pices.name == "bishop":
-            pass
+        if piece.name == "rook":
+            
+           straightline_moves([
+              (-1, 0), # up
+                (0, 1), # right
+                (1, 0), # down
+                (0, -1), # left
+           ])
+        if piece.name == "bishop": 
+            
+           straightline_moves([
+             (-1, 1), # up-right
+                (-1, -1), # up-left
+                (1, 1), # down-right
+                (1, -1), # down-left
+           ])
+        if piece.name == "queen":
+            straightline_moves([
+                (-1, 1), # up-right
+                (-1, -1), # up-left
+                (1, 1), # down-right
+                (1, -1), # down-left
+                (-1, 0), # up
+                (0, 1), # right
+                (1, 0), # down
+                (0, -1) # left
+            ])
+
 
     def draw_piece(self):
         '''
@@ -131,10 +191,12 @@ class Board:
             self.Piece_Arr[first_row][col]=PiecePlace(first_row,col,Pawn(color))
 
         # rooks
+
         self.Piece_Arr[second_row][0] = PiecePlace(second_row, 0, Rook(color))
         self.Piece_Arr[second_row][7] = PiecePlace(second_row, 7, Rook(color))
 
         # queen
+
         self.Piece_Arr[second_row][3] = PiecePlace(second_row, 3, Queen(color))
 
         # knights
@@ -144,6 +206,7 @@ class Board:
         self.Piece_Arr[second_row][4] = PiecePlace(second_row, 4, King(color))
 
         # bishops
+
         self.Piece_Arr[second_row][2] = PiecePlace(second_row, 2, Bishop(color))
         self.Piece_Arr[second_row][5] = PiecePlace(second_row, 5, Bishop(color))
 
