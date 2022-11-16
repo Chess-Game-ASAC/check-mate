@@ -1,5 +1,6 @@
 
 from chess_piece import *
+from chess_move import * 
 
 
 class PiecePlace:
@@ -16,6 +17,27 @@ class PiecePlace:
             this method just to check if the square has a picec on it (true or false )
             '''
             return self.piece !=None
+        def has_partners_piece(self, color):
+            '''
+            just to check if the squaer has a partners or not 
+            '''
+            return self.piece.color == color and self.has_piece()
+        def enemies_piece(self,color):
+            '''
+            just to check if the squaer has an eneimes or not 
+            '''
+            return self.piece.color != color and self.has_piece()
+        def empty_square(self):
+            '''
+            check if the squaer is empty or not 
+            '''
+            return self.piece==None
+        def empty_or_enemies(self,color):
+            '''
+            check if the squaer is empty or has an eneime 
+            '''
+            return self.empty_square() or self.enemies_piece(color)
+        
 class Board:
     '''
     this class to add the pieces on the board  
@@ -28,6 +50,56 @@ class Board:
         self.draw_piece()
         self.add_pieces('white')
         self.add_pieces('black')
+    def in_board(self ,*args):
+        '''
+        this method to chek  the range of the move 
+        '''
+        for arg in args:
+            if arg<0 or arg>7:
+                return False
+        return True 
+    def knight_possible_move(self, pices ,row , colum):
+        '''
+        this mthod to suggestion the possible move for the knight 
+        '''
+        knight_moves =[
+                (row-2, colum+1),
+                (row-1, colum+2),
+                (row+1, colum+2),
+                (row+2, colum+1),
+                (row+2, colum-1),
+                (row+1, colum-2),
+                (row-1, colum-2),
+                (row-2, colum-1),
+            ]
+        for knight_move in knight_moves :
+            knight_move_row= knight_move[0]
+            knight_move_colum= knight_move[1]
+            if self.in_board(knight_move_row,knight_move_colum):
+                if self.Piece_Arr[knight_move_row][knight_move_colum].empty_or_enemies(pices.color):
+                    start = PiecePlace(row , colum)
+                    end = PiecePlace(knight_move_row,knight_move_colum)
+                    move= Move(start,end)
+                    pices.append_move(move)
+
+
+    def possible_moves(self, pices ,row , colum):
+        '''
+        this mthod to suggestion the possible move for the each pices when you need to move it 
+
+        '''
+        if pices.name == "knight":
+            self.knight_possible_move( pices ,row , colum)
+        if pices.name == "pawn":
+            pass
+        if pices.name == "king":
+            pass
+        if pices.name == "rook":
+            pass
+        if pices.name == "queen":
+            pass
+        if pices.name == "bishop":
+            pass
 
     def draw_piece(self):
         '''
@@ -68,7 +140,6 @@ class Board:
         # knights
         self.Piece_Arr[second_row][1] = PiecePlace(second_row, 1, Knight(color))
         self.Piece_Arr[second_row][6] = PiecePlace(second_row, 6, Knight(color))
-
         # king
         self.Piece_Arr[second_row][4] = PiecePlace(second_row, 4, King(color))
 
@@ -76,7 +147,11 @@ class Board:
         self.Piece_Arr[second_row][2] = PiecePlace(second_row, 2, Bishop(color))
         self.Piece_Arr[second_row][5] = PiecePlace(second_row, 5, Bishop(color))
 
+
+
+
 if __name__ =="__main__":
+
     board=Board()
     print(board.Piece_Arr[0][0]. has_piece())
     print(board.Piece_Arr[5][5]. has_piece())

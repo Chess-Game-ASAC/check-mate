@@ -12,6 +12,7 @@ class Motion :
         self.piece=None  #Save the piece you clicked on
         self.M_row=None  #Save the row you motion on it
         self.M_col=None  #Save the column you motion on it
+        self.moving= False
  
     # MOUSEMOTION event
     def MouseMotion(self,col,row):
@@ -48,6 +49,7 @@ class Motion :
         save the piece that you clicked on it 
         """
         self.piece=piece
+        self.moving= True
     # MOUSE BUTTON UP event
     def delete_piece(self):
         """
