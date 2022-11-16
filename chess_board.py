@@ -81,7 +81,35 @@ class Board:
                     end = PiecePlace(knight_move_row,knight_move_colum)
                     move= Move(start,end)
                     pices.append_move(move)
+
     
+    def king_moves(self, pices ,row , colum):
+            '''
+            this mthod to suggestion the possible move for the King 
+            '''
+            adjs = [
+                (row-1, colum+0), 
+                (row-1, colum+1), 
+                (row+0, colum+1), 
+                (row+1, colum+1), 
+                (row+1, colum+0), 
+                (row+1, colum-1), 
+                (row+0, colum-1), 
+                (row-1, colum-1), 
+            ]
+
+            # normal moves
+            for possible_move in adjs:
+                possible_move_row, possible_move_col = possible_move
+
+                if self.in_board(possible_move_row, possible_move_col):
+                    if self.Piece_Arr[possible_move_row][possible_move_col].empty_or_enemies(pices.color):
+                        # create squares of the new move
+                        initial = PiecePlace(row, colum)
+                        final = PiecePlace(possible_move_row, possible_move_col) # piece=piece
+                        # create new move
+                        move = Move(initial, final)
+                        pices.append_move(move)
       
     def possible_moves(self, piece ,row , colum):
         def straightline_moves(incrs):
@@ -131,7 +159,7 @@ class Board:
         if piece.name == "pawn":
             pass
         if piece.name == "king":
-            pass
+            self.king_moves( piece ,row , colum)
         if piece.name == "rook":
             
            straightline_moves([
@@ -204,6 +232,7 @@ class Board:
         self.Piece_Arr[second_row][6] = PiecePlace(second_row, 6, Knight(color))
         # king
         self.Piece_Arr[second_row][4] = PiecePlace(second_row, 4, King(color))
+
 
         # bishops
 
