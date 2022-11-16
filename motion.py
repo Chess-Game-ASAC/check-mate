@@ -58,4 +58,6 @@ class Motion :
         self.piece=None
         self.M_row=None
         self.M_col=None
+        self.moving= False
+
 
