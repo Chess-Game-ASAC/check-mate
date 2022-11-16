@@ -31,7 +31,7 @@ class Main:
       board=self.game.board  #call the board attribute in the game class which is object "Board class"
       
       self.game.show_background(self.screen)  #display the board
-      
+      # self.game.show_possible_move(self.screen)
       self.game.show_pieces(self.screen) #put the pieces on the board
       
       if motion.piece is not None and motion.M_col is not None and motion.M_row is not None:
@@ -54,28 +54,30 @@ class Main:
             self.game.show_possible_move(self.screen)
 
         # mouse motion event to move the piece in specifiic square 
-        if event.type ==pygame.MOUSEMOTION:
+        elif event.type ==pygame.MOUSEMOTION:
           col,row=event.pos
           # motion.new_postion(row,col)
           if motion.piece is not None:
             motion.MouseMotion(col,row)
+            self.game.show_background(self.screen)  
+            self.game.show_pieces(self.screen) 
             motion.update_screen(self.screen)
             self.game.show_possible_move(self.screen)
            
 
         # releasing your click event 
-        if event.type == pygame.MOUSEBUTTONUP:
-          col,row=event.pos
-          col=col//75
-          row=row//75
+        elif event.type == pygame.MOUSEBUTTONUP:
+          # col,row=event.pos
+          # col=col//75
+          # row=row//75
           
-          board.Piece_Arr[motion.row_x][motion.col_y].piece=None
-          board.Piece_Arr[row][col].piece=motion.piece
+          # board.Piece_Arr[motion.row_x][motion.col_y].piece=None
+          # board.Piece_Arr[row][col].piece=motion.piece
           motion.delete_piece()
 
 
         # quite the check mate game  
-        if event.type == pygame.QUIT:
+        elif event.type == pygame.QUIT:
           pygame.quit()
           sys.exit()
 
