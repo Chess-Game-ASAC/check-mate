@@ -55,11 +55,14 @@ class Game:
         '''
         if self.motion.moving :
             piece = self.motion.piece
-      
+    #   "#e9ed11" 
             # loop all valid moves
             for move in piece.moves:
                 # color
-                color = "#e9ed11"            
+                if (move.end.row + move.end.col) % 2 == 0 :
+                    color="#D989B5"
+                else:
+                    color ="#FFADBC"        
                 # rect
                 rect = (move.end.col * 75, move.end.row * 75, 75, 75)
                 # blit
