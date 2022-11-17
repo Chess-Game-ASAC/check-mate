@@ -136,7 +136,7 @@ class Board:
             
             if self.in_board(possible_move_row):
                 # we want to check if piece place is empty or rival 
-                if self.Piece_Arr[possible_move_row][column].empty_or_enemies(piece.color):
+                if self.Piece_Arr[possible_move_row][column].empty_square():
                      # 1. create initial and final move
                      # 2. create new move
                      # 3. append new move
@@ -282,7 +282,7 @@ class Board:
         #Pawns
         for col in range (8):
             self.Piece_Arr[first_row][col]=PiecePlace(first_row,col,Pawn(color))
-        # self.Piece_Arr[5][1]=PiecePlace(5,1,Pawn(color))
+        self.Piece_Arr[5][1]=PiecePlace(5,1,Pawn(color))
         # self.Piece_Arr[first_row][col]=PiecePlace(first_row,col,Pawn(color))
         # rooks
 
