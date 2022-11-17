@@ -6,7 +6,7 @@ from chess_move import *
 class PiecePlace:
         def __init__(self,row,col,piece=None):
             '''
-            this Constructor to run all time the piece and row and column for this square  
+            this Constructor to run all time the piece and row and columnn for this square  
             '''
             self.row=row 
             self.col=col
@@ -26,7 +26,8 @@ class PiecePlace:
             '''
             just to check if the squaer has an eneimes or not 
             '''
-            return self.piece.color != color and self.has_piece()
+            # return self.piece.color != color and self.has_piece()
+            return self.has_piece() and self.piece.color != color
         def empty_square(self):
             '''
             check if the squaer is empty or not 
@@ -45,7 +46,7 @@ class Board:
     def __init__(self):
 
         self.Piece_Arr = []
-        for col in range(8): # the for loob to create a 8 zeros for each column 
+        for col in range(8): # the for loob to create a 8 zeros for each columnn 
           self.Piece_Arr.append([0, 0, 0, 0, 0, 0, 0, 0])
         self.draw_piece()
         self.add_pieces('white')
@@ -58,44 +59,44 @@ class Board:
             if arg<0 or arg>7:
                 return False
         return True 
-    def knight_possible_move(self, pices ,row , colum):
+    def knight_possible_move(self, pices ,row , column):
         '''
         this mthod to suggestion the possible move for the knight 
         '''
         knight_moves =[
-                (row-2, colum+1),
-                (row-1, colum+2),
-                (row+1, colum+2),
-                (row+2, colum+1),
-                (row+2, colum-1),
-                (row+1, colum-2),
-                (row-1, colum-2),
-                (row-2, colum-1),
+                (row-2, column+1),
+                (row-1, column+2),
+                (row+1, column+2),
+                (row+2, column+1),
+                (row+2, column-1),
+                (row+1, column-2),
+                (row-1, column-2),
+                (row-2, column-1),
             ]
         for knight_move in knight_moves :
             knight_move_row= knight_move[0]
-            knight_move_colum= knight_move[1]
-            if self.in_board(knight_move_row,knight_move_colum):
-                if self.Piece_Arr[knight_move_row][knight_move_colum].empty_or_enemies(pices.color):
-                    start = PiecePlace(row , colum)
-                    end = PiecePlace(knight_move_row,knight_move_colum)
+            knight_move_column= knight_move[1]
+            if self.in_board(knight_move_row,knight_move_column):
+                if self.Piece_Arr[knight_move_row][knight_move_column].empty_or_enemies(pices.color):
+                    start = PiecePlace(row , column)
+                    end = PiecePlace(knight_move_row,knight_move_column)
                     move= Move(start,end)
                     pices.append_move(move)
 
     
-    def king_moves(self, pices ,row , colum):
+    def king_moves(self, pices ,row , column):
             '''
             this mthod to suggestion the possible move for the King 
             '''
             adjs = [
-                (row-1, colum+0), 
-                (row-1, colum+1), 
-                (row+0, colum+1), 
-                (row+1, colum+1), 
-                (row+1, colum+0), 
-                (row+1, colum-1), 
-                (row+0, colum-1), 
-                (row-1, colum-1), 
+                (row-1, column+0), 
+                (row-1, column+1), 
+                (row+0, column+1), 
+                (row+1, column+1), 
+                (row+1, column+0), 
+                (row+1, column-1), 
+                (row+0, column-1), 
+                (row-1, column-1), 
             ]
 
             # normal moves
@@ -105,23 +106,81 @@ class Board:
                 if self.in_board(possible_move_row, possible_move_col):
                     if self.Piece_Arr[possible_move_row][possible_move_col].empty_or_enemies(pices.color):
                         # create squares of the new move
-                        initial = PiecePlace(row, colum)
+                        initial = PiecePlace(row, column)
                         final = PiecePlace(possible_move_row, possible_move_col) # piece=piece
                         # create new move
                         move = Move(initial, final)
                         pices.append_move(move)
+#_________________________________________
+    def pawn_possible_moves(self, piece ,row , column):
+
+        # num. of steps valid
+        if piece.moved:
+            steps =1
+        else:
+            steps =2 # the pawn can move 2 steps if not move befor
+        
+        # the pown have to types of move:
+        # 1. vertical move 
+
+        pawn_start = row + piece.direction
+        pawn_end = row + (piece.direction * (1+steps) )
+
+        for possible_move_row in range(pawn_start, pawn_end, piece.direction):
+            
+            if self.in_board(possible_move_row):
+                # we want to check if piece place is empty or rival 
+                if self.Piece_Arr[possible_move_row][column].empty_or_enemies(piece.color):
+                     # 1. create initial and final move
+                     # 2. create new move
+                     # 3. append new move
+                    initial_move = PiecePlace(row, column)
+                    final_move = PiecePlace(possible_move_row,column)
+                    move = Move(initial_move,final_move)
+
+                    piece.append_move(move)
+
+                else:
+                    break  # because if the first square is not empty -> 
+                           #we can't make possible the other place even though it's empty we arw already blocked
+        # not in range
+            else: 
+                break 
+
+        # 2. diagonal move (when eat piece) 
+        # One step in diagonal then we don't need steps
+        possible_move_row = row + piece.direction
+        possible_move_cols = [column-1, column+1] # the value depend on the color
+
+        for possible_move_col in possible_move_cols:
+            if self.in_board(possible_move_row, possible_move_col):
+                if self.Piece_Arr[possible_move_row][possible_move_col].enemies_piece(piece.color):
+                    # if it has an enemy piece -> move right because we cannot move if diagonal is empty 
+                    # or if it has a piece of the same color as ours so if it has an enemy piece ->can create a new move
+                    # 1. create initial and final move
+                    # 2. create new move
+                    # 3. append new move
+
+                    initial_move = PiecePlace(row, column)
+                    final_move = PiecePlace(possible_move_row,possible_move_col)
+                    move = Move(initial_move,final_move)
+
+                    piece.append_move(move)
+
+
+#_________________________________________
       
-    def possible_moves(self, piece ,row , colum):
+    def possible_moves(self, piece ,row , column):
         def straightline_moves(incrs):
             for incr in incrs:
                 row_incr, col_incr = incr
                 possible_move_row = row + row_incr
-                possible_move_col = colum + col_incr
+                possible_move_col = column + col_incr
 
                 while True:
                     if self.in_board(possible_move_row, possible_move_col):
                         # create squares of the possible new move
-                        initial = PiecePlace(row, colum)
+                        initial = PiecePlace(row, column)
                         final_piece = self.Piece_Arr[possible_move_row][possible_move_col].piece
                         final = PiecePlace(possible_move_row, possible_move_col, final_piece)
                         # create a possible new move
@@ -155,11 +214,11 @@ class Board:
 
         '''
         if piece.name == "knight":
-            self.knight_possible_move( piece ,row , colum)
+            self.knight_possible_move( piece ,row , column)
         if piece.name == "pawn":
-            pass
+            self.pawn_possible_moves( piece ,row , column)
         if piece.name == "king":
-            self.king_moves( piece ,row , colum)
+            self.king_moves( piece ,row , column)
         if piece.name == "rook":
             
            straightline_moves([
@@ -217,7 +276,8 @@ class Board:
         #Pawns
         for col in range (8):
             self.Piece_Arr[first_row][col]=PiecePlace(first_row,col,Pawn(color))
-
+        self.Piece_Arr[5][1]=PiecePlace(5,1,Pawn(color))
+        # self.Piece_Arr[first_row][col]=PiecePlace(first_row,col,Pawn(color))
         # rooks
 
         self.Piece_Arr[second_row][0] = PiecePlace(second_row, 0, Rook(color))
