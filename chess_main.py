@@ -39,8 +39,8 @@ class Main:
 
 
       for event in pygame.event.get():   #loop through the event
-
-        # click event to select the piece need to move 
+        # we have three events
+        # 1. click event to select the piece need to move 
         if event.type ==pygame.MOUSEBUTTONDOWN:
           col,row=event.pos
           motion.MouseMotion(col,row)
@@ -55,7 +55,7 @@ class Main:
             self.game.show_possible_move(self.screen)
             self.game.show_pieces(self.screen) 
 
-        # mouse motion event to move the piece in specifiic square 
+        # 2. mouse motion event to move the piece in specifiic square 
         elif event.type ==pygame.MOUSEMOTION:
           col,row=event.pos
           # motion.new_postion(row,col)
@@ -67,7 +67,7 @@ class Main:
             motion.update_screen(self.screen)
            
 
-        # releasing your click event 
+        # 3. releasing your click event 
         elif event.type == pygame.MOUSEBUTTONUP:
           # col,row=event.pos
           # col=col//75
@@ -78,7 +78,7 @@ class Main:
           motion.delete_piece()
 
 
-        # quite the check mate game  
+        # 4. quite the check mate game  
         elif event.type == pygame.QUIT:
           pygame.quit()
           sys.exit()
