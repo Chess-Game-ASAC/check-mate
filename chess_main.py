@@ -78,7 +78,7 @@ class Main:
           motion.delete_piece()
 
 
-        # 4. quite the check mate game  
+        # quite the check mate game  
         elif event.type == pygame.QUIT:
           pygame.quit()
           sys.exit()
