@@ -1,4 +1,5 @@
 from chess_board import *
+import pytest
 
 
 # check the board have pecie in a specific place
@@ -49,3 +50,8 @@ def test_check_the_pieceName_in_selected_place4():
 def test_check_the_pieceName_in_selected_place5():
     board=Board()
     assert board.Piece_Arr[0][4].piece.name=="king"
+
+#test after add move feature
+@pytest.fixture
+def board():
+    board = Board()
