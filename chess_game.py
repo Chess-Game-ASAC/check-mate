@@ -62,9 +62,12 @@ class Game:
             for move in piece.moves:
                 # color
                 if (move.end.row + move.end.col) % 2 == 0 :
-                    color="#D989B5"
+                    color="#FF8DC7"
                 else:
-                    color ="#FFADBC"        
+                    color ="#FFADBC"                    
+                #     color="#D989B5"
+                # else:
+                #     color ="#FFADBC"        
                 # rect
                 rect = (move.end.col * 75, move.end.row * 75, 75, 75)
                 # blit
