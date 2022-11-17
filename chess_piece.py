@@ -21,7 +21,7 @@ class Piece:
         """
         this methode to creat the path of the piece image 
         """
-        self.image = os.path.join(f'images1/imgs-80px/{self.color}_{self.name}.png')
+        self.image = os.path.join(f'images/imgs-80px/{self.color}_{self.name}.png')
 
 class King(Piece):
     """
