@@ -37,7 +37,8 @@ class Game:
             #check if the square have piece then show the piece on the chess board in the center of his square
             if self.board.Piece_Arr[row][col].has_piece():
                 
-                piece=self.board.Piece_Arr[row][col].piece
+                piece=self.board.Piece_Arr[row][col].piece  # saving that piece into a variable
+
                 if piece is not self.motion.piece:
                    # print("11111",piece)
                    img = pygame.image.load(piece.image)
@@ -45,6 +46,7 @@ class Game:
                    img_center = col * 75 + 75 // 2, row * 75 + 75 // 2
                    # print("333333333",img_center)
                    piece.image_rect = img.get_rect(center=img_center)
+                   # get_rect -> this is pygame method
                    # print("4444444",piece.image_rect)
                    # blit() is function in pygame to draw one image into another
                    surface.blit(img, piece.image_rect)

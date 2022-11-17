@@ -11,15 +11,17 @@ class Piece:
         self.image=image #the path of pecies image 
         self.set_image() # put the path in self.image
         self.image_rect=image_rect
-        self.moves= []
+        self.moves= [] #valid moves
+        self.moved = False
     def append_move(self,move):
         self.moves.append(move)
+    def clear_moves(self):
+        self.moves = []
     def set_image(self):
         """
-        this methode to creat the path of the pecie image 
+        this methode to creat the path of the piece image 
         """
-        self.image = os.path.join(
-            f'images/imgs-80px/{self.color}_{self.name}.png')
+        self.image = os.path.join(f'images1/imgs-80px/{self.color}_{self.name}.png')
 
 class King(Piece):
     """
@@ -66,5 +68,10 @@ class Pawn(Piece):
     this class Inherit from Piece class and creat the path to Pawn Piece
     """
     def __init__(self, color):
+        self.direction = -1 if color == "white" else 1  # short if-else statement
         super().__init__('pawn', color)
+
+        # pygame coordinates:the x axies increases to the right but the y axis increases going downwards
+        # the white pieces (pown) when go up -> the direction is going be -1
+        # the black pieces (pown) when go down -> the direction is going be +1
 
