@@ -26,7 +26,7 @@ class PiecePlace:
             '''
             just to check if the squaer has an eneimes or not 
             '''
-            # return self.piece.color != color and self.has_piece()
+            #return self.piece.color != color and self.has_piece()
             return self.has_piece() and self.piece.color != color
         def empty_square(self):
             '''
@@ -59,6 +59,9 @@ class Board:
             if arg<0 or arg>7:
                 return False
         return True 
+
+#_______________knight moves_________________#
+
     def knight_possible_move(self, pices ,row , column):
         '''
         this mthod to suggestion the possible move for the knight 
@@ -111,7 +114,10 @@ class Board:
                         # create new move
                         move = Move(initial, final)
                         pices.append_move(move)
-#_________________________________________
+
+            
+#_______________pawn moves_________________#
+
     def pawn_possible_moves(self, piece ,row , column):
 
         # num. of steps valid
@@ -276,7 +282,7 @@ class Board:
         #Pawns
         for col in range (8):
             self.Piece_Arr[first_row][col]=PiecePlace(first_row,col,Pawn(color))
-        self.Piece_Arr[5][1]=PiecePlace(5,1,Pawn(color))
+        # self.Piece_Arr[5][1]=PiecePlace(5,1,Pawn(color))
         # self.Piece_Arr[first_row][col]=PiecePlace(first_row,col,Pawn(color))
         # rooks
 
