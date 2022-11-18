@@ -1,6 +1,7 @@
 import pygame
 import sys  # this model is help to quit the application
 from chess_game import Game 
+from chess_move import Move
 
 
 class Main:
@@ -31,6 +32,7 @@ class Main:
       board=self.game.board  #call the board attribute in the game class which is object "Board class"
       
       self.game.show_background(self.screen)  #display the board
+      self.game.show_last_move(self.screen)
       self.game.show_possible_move(self.screen)
       self.game.show_pieces(self.screen) #put the pieces on the board
       
@@ -49,11 +51,15 @@ class Main:
           motion.update(row,col) 
 
           if board.Piece_Arr[row][col].has_piece():
-            board.possible_moves(board.Piece_Arr[row][col].piece,row,col)
-            motion.save_piece(board.Piece_Arr[row][col].piece)
-            self.game.show_background(self.screen)
-            self.game.show_possible_move(self.screen)
-            self.game.show_pieces(self.screen) 
+            #check if it the valid piece (color) 
+            if self.game.next_player==board.Piece_Arr[row][col].piece.color:
+              board.possible_moves(board.Piece_Arr[row][col].piece,row,col)
+              motion.save_piece(board.Piece_Arr[row][col].piece)
+              self.game.show_background(self.screen)
+              self.game.show_last_move(self.screen)
+              self.game.show_possible_move(self.screen)
+              self.game.show_pieces(self.screen)
+              
 
         # 2. mouse motion event to move the piece in specifiic square 
         elif event.type ==pygame.MOUSEMOTION:
@@ -62,6 +68,7 @@ class Main:
           if motion.piece is not None:
             motion.MouseMotion(col,row)
             self.game.show_background(self.screen)  
+            self.game.show_last_move(self.screen)
             self.game.show_possible_move(self.screen)
             self.game.show_pieces(self.screen) 
             motion.update_screen(self.screen)
@@ -69,12 +76,30 @@ class Main:
 
         # 3. releasing your click event 
         elif event.type == pygame.MOUSEBUTTONUP:
-          # col,row=event.pos
-          # col=col//75
-          # row=row//75
-          
-          # board.Piece_Arr[motion.row_x][motion.col_y].piece=None
-          # board.Piece_Arr[row][col].piece=motion.piece
+          col,row=event.pos
+          col=col//75
+          row=row//75
+          if motion.moving :   # check if have moving 
+            piece = motion.piece  #self.game.motion.piece 
+            # loop all valid moves and heck if select move in the valid move 
+            for move in piece.moves:
+    
+              if move.end.row==row and move.end.col==col :
+                  #delete the previse row and col  
+                  board.Piece_Arr[motion.row_x][motion.col_y].piece=None
+                  board.Piece_Arr[row][col].piece=motion.piece  #the final row and col have piece
+                  piece.moved=True   # this pieces moved
+                  board.last_move=move   # to change the square color of the last move 
+                  #next turn
+                  self.game.next_turn() 
+                  board.move(motion.piece, move)  
+                  self.game.show_background(self.screen)  
+                  self.game.show_last_move(self.screen)
+                  self.game.show_pieces(self.screen) 
+                  break
+                   
+            piece.moves=[]      
+
           motion.delete_piece()
 
 

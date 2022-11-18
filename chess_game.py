@@ -10,6 +10,7 @@ class Game:
     def __init__(self):
         self.board=Board()
         self.motion=Motion()
+        self.next_player="white"
         
 
 
@@ -65,11 +66,27 @@ class Game:
                     color="#FF8DC7"
                 else:
                     color ="#FFADBC"                    
-                #     color="#D989B5"
-                # else:
-                #     color ="#FFADBC"        
+               
                 # rect
                 rect = (move.end.col * 75, move.end.row * 75, 75, 75)
                 # blit
                 pygame.draw.rect(surface, color, rect)
+    
+    def next_turn(self):
+        if self.next_player=="white":
+            self.next_player="black" 
+        else:
+            self.next_player="white"
 
+    def show_last_move(self,surface):
+        if self.board.last_move is not None:
+            #color the start square
+            strat_move=self.board.last_move.start
+            color="#AABBCC"
+            rect = (strat_move.col * 75, strat_move.row * 75, 75, 75)
+            pygame.draw.rect(surface, color, rect)
+          #color the start square
+            end_move=self.board.last_move.end
+            color="#89AACB"
+            rect = (end_move.col * 75, end_move.row * 75, 75, 75)
+            pygame.draw.rect(surface, color, rect) # part of square ,width=6
