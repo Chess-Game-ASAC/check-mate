@@ -48,6 +48,7 @@ class Board:
         self.Piece_Arr = []
         for col in range(8): # the for loob to create a 8 zeros for each columnn 
           self.Piece_Arr.append([0, 0, 0, 0, 0, 0, 0, 0])
+        self.last_move=None
         self.draw_piece()
         self.add_pieces('white')
         self.add_pieces('black')
@@ -59,6 +60,26 @@ class Board:
             if arg<0 or arg>7:
                 return False
         return True 
+    
+#______________ move method_________________#
+
+    def move(self, piece, move, testing=False):
+        "   mainما رح استخدم هاد الكود الي تحت كتبتو مباشره ب "
+        "بس يخلص اخر واحد يحذفهم "
+        # initial = move.initial
+        # final = move.final
+        # # console board move update
+        # self.squares[initial.row][initial.col].piece = None
+        # self.squares[final.row][final.col].piece = piece
+        # # move
+        # piece.moved = True
+
+        # # clear valid moves
+        # piece.clear_moves()  "مهم ما تتفعل "
+
+        # # set last move
+        # self.last_move = move
+
 
 #_______________knight moves_________________#
 
@@ -177,6 +198,7 @@ class Board:
 #_________________________________________
       
     def possible_moves(self, piece ,row , column):
+
         def straightline_moves(incrs):
             for incr in incrs:
                 row_incr, col_incr = incr
@@ -282,28 +304,33 @@ class Board:
         #Pawns
         for col in range (8):
             self.Piece_Arr[first_row][col]=PiecePlace(first_row,col,Pawn(color))
-        self.Piece_Arr[5][1]=PiecePlace(5,1,Pawn(color))
+        # self.Piece_Arr[5][1]=PiecePlace(5,1,Pawn(color))
+        # self.Piece_Arr[3][1]=PiecePlace(5,2,Pawn("white"))
         # self.Piece_Arr[first_row][col]=PiecePlace(first_row,col,Pawn(color))
         # rooks
 
         self.Piece_Arr[second_row][0] = PiecePlace(second_row, 0, Rook(color))
         self.Piece_Arr[second_row][7] = PiecePlace(second_row, 7, Rook(color))
-
+        # self.Piece_Arr[5][5] = PiecePlace(5, 5, Rook("white"))
         # queen
 
         self.Piece_Arr[second_row][3] = PiecePlace(second_row, 3, Queen(color))
-        self.Piece_Arr[4][4] = PiecePlace(4, 4, Queen("white"))
+        # self.Piece_Arr[5][7] = PiecePlace(4, 4, Queen("white"))
+
         # knights
         self.Piece_Arr[second_row][1] = PiecePlace(second_row, 1, Knight(color))
         self.Piece_Arr[second_row][6] = PiecePlace(second_row, 6, Knight(color))
+        # self.Piece_Arr[3][3] = PiecePlace(3,3, Knight(color))
         # king
         self.Piece_Arr[second_row][4] = PiecePlace(second_row, 4, King(color))
+        # self.Piece_Arr[4][4] = PiecePlace(4, 4, King(color))
 
 
         # bishops
 
         self.Piece_Arr[second_row][2] = PiecePlace(second_row, 2, Bishop(color))
         self.Piece_Arr[second_row][5] = PiecePlace(second_row, 5, Bishop(color))
+        # self.Piece_Arr[4][7] = PiecePlace(4, 7, Bishop(color))
 
 
 
