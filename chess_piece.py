@@ -14,7 +14,7 @@ class Piece:
         self.moves= [] #valid moves
         self.moved = False
     def append_move(self,move):
-        self.moves.append(move)
+        self.moves.append(move)  # move {start :{row:,col:,piece:} ,end:{row:,col:,piece:}}
     def clear_moves(self):
         self.moves = []
     def set_image(self):
