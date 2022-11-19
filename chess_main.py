@@ -2,6 +2,7 @@ import pygame
 import sys  # this model is help to quit the application
 from chess_game import Game 
 from chess_move import Move
+from chess_board import *
 
 
 class Main:
@@ -79,31 +80,33 @@ class Main:
 
         # 3. releasing your click event 
         elif event.type == pygame.MOUSEBUTTONUP:
-          col,row=event.pos
-          col=col//75
-          row=row//75
-          if motion.moving :   # check if have moving 
-            piece = motion.piece  #self.game.motion.piece 
-            # loop all valid moves and heck if select move in the valid move 
-            for move in piece.moves:
-    
-              if move.end.row==row and move.end.col==col :
-                  #delete the previse row and col  
-                  board.Piece_Arr[motion.row_x][motion.col_y].piece=None
-                  board.Piece_Arr[row][col].piece=motion.piece  #the final row and col have piece
-                  piece.moved=True   # this pieces moved
-                  board.last_move=move   # to change the square color of the last move 
-                  #next turn
-                  self.game.next_turn() 
-                  board.move(motion.piece, move)  
-                  self.game.show_background(self.screen)  
-                  self.game.show_last_move(self.screen)
-                  self.game.show_pieces(self.screen) 
-                  break
-                   
-            piece.moves=[]      
 
+          if motion.moving:
+            motion.MouseMotion(event.pos[0],event.pos[1])
+
+            released_row = motion.M_row // 75
+            released_col = motion.M_col // 75
+
+              # create possible move
+            initial =PiecePlace(motion.row_x, motion.col_y)
+            final = PiecePlace(released_row, released_col)
+            move = Move(initial, final)
+
+              # valid move ?
+            if board.valid_move(motion.piece, move):
+                # normal capture
+                captured = board.Piece_Arr[released_row][released_col].has_piece()
+                board.move(motion.piece, move)
+                board.set_true_en_passant(motion.piece)                            
+                # show methods
+                game.show_background(self.screen)
+                game.show_last_move(self.screen)
+                game.show_pieces(self.screen)
+                # next turn
+                game.next_turn()
+            motion.piece.clear_moves()
           motion.delete_piece()
+          
 
         #4. restart the game  
         elif event.type == pygame.KEYDOWN:
