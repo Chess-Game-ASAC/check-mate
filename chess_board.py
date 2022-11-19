@@ -11,6 +11,8 @@ class PiecePlace:
             self.row=row 
             self.col=col
             self.piece=piece # is object
+        def __eq__(self, other):
+             return self.row == other.row and self.col == other.col
 
         def has_piece(self):
             '''
@@ -63,10 +65,7 @@ class Board:
         return True 
     
 #______________ move method_________________#
-
     def move(self, piece, move, testing=False):
-        "   mainما رح استخدم هاد الكود الي تحت كتبتو مباشره ب "
-        "بس يخلص اخر واحد يحذفهم "
         initial = move.start
         final = move.end
 
@@ -79,31 +78,35 @@ class Board:
         if isinstance(piece, Pawn):
             # en passant capture
             diff = final.col - initial.col
-            if diff != 0 and en_passant_empty:
+            if diff != 0 and  en_passant_empty:
+                print(en_passant_empty,"22222222222222222222222222")
                 # console board move update
                 self.Piece_Arr[initial.row][initial.col + diff].piece = None
                 self.Piece_Arr[final.row][final.col].piece = piece
+                
             
             # pawn promotion
             else:
                 self.check_promotion(piece, final)
 
         # king castling
-
         if isinstance(piece, King):
             if self.castling(initial, final) and not testing:
                 diff = final.col - initial.col
                 rook = piece.left_rook if (diff < 0) else piece.right_rook
                 self.move(rook, rook.moves[-1])
+         # move
+        piece.moved = True
 
-        #  # move
-        # piece.moved = True
+        # clear valid moves
+        piece.clear_moves()
 
-        # # clear valid moves
-        # piece.clear_moves()  "مهم ما تتفعل "
+        # set last move
+        self.last_move = move
 
-        # # set last move
-        # self.last_move = move
+    def valid_move(self, piece, move):
+        return move in piece.moves
+    # 
 
 
 #_______________knight moves_________________#
@@ -275,12 +278,59 @@ class Board:
                     # 3. append new move
 
                     initial_move = PiecePlace(row, column)
-                    final_move = PiecePlace(possible_move_row,possible_move_col)
+                    final_piece = self.Piece_Arr[possible_move_row][possible_move_col].piece
+                    final_move = PiecePlace(possible_move_row, possible_move_col, final_piece)
                     move = Move(initial_move,final_move)
 
                     piece.append_move(move)
+    
+# en passant moves
+        r = 3 if piece.color == 'white' else 4
+        fr = 2 if piece.color == 'white' else 5
+        # left en pessant
+        if self.in_board(column-1) and row == r:
+            if self.Piece_Arr[row][column-1].enemies_piece(piece.color):
+                p = self.Piece_Arr[row][column-1].piece
+                if isinstance(p, Pawn):
+                    if p.en_passant:
+                        # create initial and final move squares
+                        initial = PiecePlace(row, column)
+                        final = PiecePlace(fr, column-1, p)
+                        # create a new move
+                        move = Move(initial, final)
+                        
+                        
+                        piece.append_move(move)
+                        
+        
+        # right en pessant
+        if self.in_board(column+1) and row == r:
+            if self.Piece_Arr[row][column+1].enemies_piece(piece.color):
+                p = self.Piece_Arr[row][column+1].piece
+                if isinstance(p, Pawn):
+                    if p.en_passant:
+                        # create initial and final move squares
+                        initial = PiecePlace(row, column)
+                        final = PiecePlace(fr, column+1, p)
+                        # create a new move
+                        move = Move(initial, final)
+                        
+                        # check potencial checks
+                        
+                        piece.append_move(move)
+                        
+                            
+    def set_true_en_passant(self, piece):
+        
+        if not isinstance(piece, Pawn):
+            return
 
-
+        for row in range(8):
+            for col in range(8):
+                if isinstance(self.Piece_Arr[row][col].piece, Pawn):
+                    self.Piece_Arr[row][col].piece.en_passant = False
+        
+        piece.en_passant = True
 #_________________________________________
       
     def possible_moves(self, piece ,row , column):
