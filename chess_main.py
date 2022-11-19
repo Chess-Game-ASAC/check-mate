@@ -26,6 +26,9 @@ class Main:
     3. responsible of calling all other classes
     
     """
+    game = self.game
+    motion=self.game.motion  
+    board=self.game.board
     
     while True:
       motion=self.game.motion  #call the motion attribute in the game class which is object "Motion class"
@@ -102,7 +105,13 @@ class Main:
 
           motion.delete_piece()
 
-
+        #4. restart the game  
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_r:
+              game.reset()
+              game = self.game
+              motion=self.game.motion  
+              board=self.game.board
         # 4. quite the check mate game  
         elif event.type == pygame.QUIT:
           pygame.quit()

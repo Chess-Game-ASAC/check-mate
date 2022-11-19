@@ -66,12 +66,28 @@ class Board:
     def move(self, piece, move, testing=False):
         "   mainما رح استخدم هاد الكود الي تحت كتبتو مباشره ب "
         "بس يخلص اخر واحد يحذفهم "
-        # initial = move.initial
-        # final = move.final
-        # # console board move update
-        # self.squares[initial.row][initial.col].piece = None
-        # self.squares[final.row][final.col].piece = piece
-        # # move
+        initial = move.start
+        final = move.end
+
+        en_passant_empty = self.Piece_Arr[final.row][final.col].empty_square()
+
+        # console board move update
+        self.Piece_Arr[initial.row][initial.col].piece = None
+        self.Piece_Arr[final.row][final.col].piece = piece
+
+        if isinstance(piece, Pawn):
+            # en passant capture
+            diff = final.col - initial.col
+            if diff != 0 and en_passant_empty:
+                # console board move update
+                self.Piece_Arr[initial.row][initial.col + diff].piece = None
+                self.Piece_Arr[final.row][final.col].piece = piece
+            
+            # pawn promotion
+            else:
+                self.check_promotion(piece, final)
+
+        #  # move
         # piece.moved = True
 
         # # clear valid moves
@@ -108,6 +124,10 @@ class Board:
                     pices.append_move(move)
 
     
+    def check_promotion(self, piece, final):
+        if final.row == 0 or final.row == 7:
+            self.Piece_Arr[final.row][final.col].piece = Queen(piece.color)
+
     def king_moves(self, pices ,row , column):
             '''
             this mthod to suggestion the possible move for the King 
