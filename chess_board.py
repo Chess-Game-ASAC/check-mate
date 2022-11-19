@@ -113,9 +113,10 @@ class Board:
         self.last_move = move
 
     def valid_move(self, piece, move):
-        for x in piece.moves:
-            if move == x:
-                return True
+        # for x in piece.moves:
+        #     if move == x:
+        #         return True
+        return move in piece.moves
 
     # 
 
