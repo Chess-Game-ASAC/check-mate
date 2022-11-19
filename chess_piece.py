@@ -22,9 +22,7 @@ class Piece:
         this methode to creat the path of the piece image 
         """
         self.image = os.path.join(f'images/imgs-80px/{self.color}_{self.name}.png')
-    def clear_moves(self):
-        self.moves = []
-
+    
 class King(Piece):
     """
     this class Inherit from Piece class and creat the path to king Piece

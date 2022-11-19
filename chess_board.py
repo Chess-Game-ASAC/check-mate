@@ -12,6 +12,9 @@ class PiecePlace:
             self.col=col
             self.piece=piece # is object
         def __eq__(self, other):
+             """
+             called when using the == operator   object==object
+             """
              return self.row == other.row and self.col == other.col
 
         def has_piece(self):
@@ -66,6 +69,9 @@ class Board:
     
 #______________ move method_________________#
     def move(self, piece, move, testing=False):
+        """
+        use to move the pieces tack 4 3 parameter : piece ,m ove , testing
+        """
         initial = move.start
         final = move.end
 
@@ -75,11 +81,13 @@ class Board:
         self.Piece_Arr[initial.row][initial.col].piece = None
         self.Piece_Arr[final.row][final.col].piece = piece
 
+#Python isinstance() function returns True if the object is specified types, and it will not match then return False. 
+#isinstance(obj, class)
+
         if isinstance(piece, Pawn):
             # en passant capture
             diff = final.col - initial.col
             if diff != 0 and  en_passant_empty:
-                print(en_passant_empty,"22222222222222222222222222")
                 # console board move update
                 self.Piece_Arr[initial.row][initial.col + diff].piece = None
                 self.Piece_Arr[final.row][final.col].piece = piece
@@ -105,7 +113,10 @@ class Board:
         self.last_move = move
 
     def valid_move(self, piece, move):
-        return move in piece.moves
+        for x in piece.moves:
+            if move == x:
+                return True
+
     # 
 
 
