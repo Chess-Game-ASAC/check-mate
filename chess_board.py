@@ -52,6 +52,7 @@ class Board:
         self.draw_piece()
         self.add_pieces('white')
         self.add_pieces('black')
+
     def in_board(self ,*args):
         '''
         this method to chek  the range of the move 
@@ -86,6 +87,14 @@ class Board:
             # pawn promotion
             else:
                 self.check_promotion(piece, final)
+
+        # king castling
+
+        if isinstance(piece, King):
+            if self.castling(initial, final) and not testing:
+                diff = final.col - initial.col
+                rook = piece.left_rook if (diff < 0) else piece.right_rook
+                self.move(rook, rook.moves[-1])
 
         #  # move
         # piece.moved = True
@@ -128,7 +137,13 @@ class Board:
         if final.row == 0 or final.row == 7:
             self.Piece_Arr[final.row][final.col].piece = Queen(piece.color)
 
-    def king_moves(self, pices ,row , column):
+
+#_______________King moves_________________#
+
+    def castling(self, initial, final):
+        return abs(initial.col - final.col) == 2
+
+    def king_moves(self, piece ,row , column):
             '''
             this mthod to suggestion the possible move for the King 
             '''
@@ -148,15 +163,66 @@ class Board:
                 possible_move_row, possible_move_col = possible_move
 
                 if self.in_board(possible_move_row, possible_move_col):
-                    if self.Piece_Arr[possible_move_row][possible_move_col].empty_or_enemies(pices.color):
+                    if self.Piece_Arr[possible_move_row][possible_move_col].empty_or_enemies(piece.color):
                         # create squares of the new move
                         initial = PiecePlace(row, column)
                         final = PiecePlace(possible_move_row, possible_move_col) # piece=piece
                         # create new move
                         move = Move(initial, final)
-                        pices.append_move(move)
+                        piece.append_move(move)
 
-            
+            # castling moves
+            if not piece.moved:
+                
+                #left castling
+                left_rook = self.Piece_Arr[row][0].piece
+                print(left_rook)
+                if left_rook.name == "rook":
+                
+                    if not left_rook.moved:
+                        for c in range(1, 4):
+                            if self.Piece_Arr[row][c].has_piece():
+                                
+                                break
+
+                            if c == 3:
+                                
+                                piece.left_rook = left_rook
+
+                                # rook move
+                                initial = PiecePlace(row, 0)
+                                final = PiecePlace(row, 3)
+                                move = Move(initial, final)
+                                left_rook.append_move(move)
+
+                                # king move
+                                initial = PiecePlace(row, column)
+                                final = PiecePlace(row, 2)
+                                move = Move(initial, final)
+                                piece.append_move(move)
+                # right castling
+                right_rook = self.Piece_Arr[row][7].piece
+                if right_rook.name == "rook":
+                    if not right_rook.moved:
+                        for c in range(5, 7):
+                            if self.Piece_Arr[row][c].has_piece():
+                                break
+
+                            if c == 6:
+                                piece.right_rook = right_rook
+
+                                # rook move
+                                initial = PiecePlace(row, 7)
+                                final = PiecePlace(row, 5)
+                                move = Move(initial, final)
+                                right_rook.append_move(move)
+
+                                # king move
+                                initial = PiecePlace(row, column)
+                                final = PiecePlace(row, 6)
+                                move = Move(initial, final)
+                                piece.append_move(move)
+                                
 #_______________pawn moves_________________#
 
     def pawn_possible_moves(self, piece ,row , column):
@@ -267,7 +333,8 @@ class Board:
             self.pawn_possible_moves( piece ,row , column)
         if piece.name == "king":
             self.king_moves( piece ,row , column)
-        if piece.name == "rook":
+        
+        if piece.name == "rook":     # if isinstance(piece,Rock)
             
            straightline_moves([
               (-1, 0), # up
@@ -275,6 +342,7 @@ class Board:
                 (1, 0), # down
                 (0, -1), # left
            ])
+
         if piece.name == "bishop": 
             
            straightline_moves([
@@ -341,6 +409,8 @@ class Board:
         self.Piece_Arr[second_row][1] = PiecePlace(second_row, 1, Knight(color))
         self.Piece_Arr[second_row][6] = PiecePlace(second_row, 6, Knight(color))
         # self.Piece_Arr[3][3] = PiecePlace(3,3, Knight(color))
+
+
         # king
         self.Piece_Arr[second_row][4] = PiecePlace(second_row, 4, King(color))
         # self.Piece_Arr[4][4] = PiecePlace(4, 4, King(color))
