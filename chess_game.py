@@ -90,3 +90,5 @@ class Game:
             color="#89AACB"
             rect = (end_move.col * 75, end_move.row * 75, 75, 75)
             pygame.draw.rect(surface, color, rect) # part of square ,width=6
+    def reset(self):
+        self.__init__()
