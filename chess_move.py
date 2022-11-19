@@ -7,6 +7,9 @@ class Move :
         self.end=end       #{row:,col:}
 
     def __eq__(self, other):
+        """
+         called when using the == operator   object==object
+        """
         return self.start == other.start and self.end == other.end
 
    
