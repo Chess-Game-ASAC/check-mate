@@ -181,7 +181,7 @@ class Board:
                     if self.Piece_Arr[possible_move_row][possible_move_col].empty_or_enemies(piece.color):
                         # create squares of the new move
                         initial = PiecePlace(row, column)
-                        final = PiecePlace(possible_move_row, possible_move_col) # piece=piece
+                        final = PiecePlace(possible_move_row, possible_move_col) 
                         # create new move
                         move = Move(initial, final)
                         piece.append_move(move)
@@ -192,7 +192,7 @@ class Board:
                 #left castling
                 left_rook = self.Piece_Arr[row][0].piece
                 print(left_rook)
-                if left_rook.name == "rook":
+                if  isinstance(left_rook, Rook):
                 
                     if not left_rook.moved:
                         for c in range(1, 4):
@@ -217,7 +217,7 @@ class Board:
                                 piece.append_move(move)
                 # right castling
                 right_rook = self.Piece_Arr[row][7].piece
-                if right_rook.name == "rook":
+                if isinstance(right_rook, Rook):
                     if not right_rook.moved:
                         for c in range(5, 7):
                             if self.Piece_Arr[row][c].has_piece():
