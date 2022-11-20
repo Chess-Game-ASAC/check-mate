@@ -1,5 +1,5 @@
 from game_menu import *
-
+    
 g = Game()
 
 while g.running:
