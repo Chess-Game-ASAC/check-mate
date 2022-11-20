@@ -11,6 +11,11 @@ class PiecePlace:
             self.row=row 
             self.col=col
             self.piece=piece # is object
+        def __eq__(self, other):
+             """
+             called when using the == operator   object==object
+             """
+             return self.row == other.row and self.col == other.col
 
         def has_piece(self):
             '''
@@ -52,6 +57,7 @@ class Board:
         self.draw_piece()
         self.add_pieces('white')
         self.add_pieces('black')
+
     def in_board(self ,*args):
         '''
         this method to chek  the range of the move 
@@ -62,23 +68,57 @@ class Board:
         return True 
     
 #______________ move method_________________#
-
     def move(self, piece, move, testing=False):
-        "   mainما رح استخدم هاد الكود الي تحت كتبتو مباشره ب "
-        "بس يخلص اخر واحد يحذفهم "
-        # initial = move.initial
-        # final = move.final
-        # # console board move update
-        # self.squares[initial.row][initial.col].piece = None
-        # self.squares[final.row][final.col].piece = piece
-        # # move
-        # piece.moved = True
+        """
+        use to move the pieces tack 4 3 parameter : piece ,m ove , testing
+        """
+        initial = move.start
+        final = move.end
 
-        # # clear valid moves
-        # piece.clear_moves()  "مهم ما تتفعل "
+        en_passant_empty = self.Piece_Arr[final.row][final.col].empty_square()
 
-        # # set last move
-        # self.last_move = move
+        # console board move update
+        self.Piece_Arr[initial.row][initial.col].piece = None
+        self.Piece_Arr[final.row][final.col].piece = piece
+
+#Python isinstance() function returns True if the object is specified types, and it will not match then return False. 
+#isinstance(obj, class)
+
+        if isinstance(piece, Pawn):
+            # en passant capture
+            diff = final.col - initial.col
+            if diff != 0 and  en_passant_empty:
+                # console board move update
+                self.Piece_Arr[initial.row][initial.col + diff].piece = None
+                self.Piece_Arr[final.row][final.col].piece = piece
+                
+            
+            # pawn promotion
+            else:
+                self.check_promotion(piece, final)
+
+        # king castling
+        if isinstance(piece, King):
+            if self.castling(initial, final) and not testing:
+                diff = final.col - initial.col
+                rook = piece.left_rook if (diff < 0) else piece.right_rook
+                self.move(rook, rook.moves[-1])
+         # move
+        piece.moved = True
+
+        # clear valid moves
+        piece.clear_moves()
+
+        # set last move
+        self.last_move = move
+
+    def valid_move(self, piece, move):
+        # for x in piece.moves:
+        #     if move == x:
+        #         return True
+        return move in piece.moves
+
+    # 
 
 
 #_______________knight moves_________________#
@@ -108,7 +148,17 @@ class Board:
                     pices.append_move(move)
 
     
-    def king_moves(self, pices ,row , column):
+    def check_promotion(self, piece, final):
+        if final.row == 0 or final.row == 7:
+            self.Piece_Arr[final.row][final.col].piece = Queen(piece.color)
+
+
+#_______________King moves_________________#
+
+    def castling(self, initial, final):
+        return abs(initial.col - final.col) == 2
+
+    def king_moves(self, piece ,row , column):
             '''
             this mthod to suggestion the possible move for the King 
             '''
@@ -128,15 +178,66 @@ class Board:
                 possible_move_row, possible_move_col = possible_move
 
                 if self.in_board(possible_move_row, possible_move_col):
-                    if self.Piece_Arr[possible_move_row][possible_move_col].empty_or_enemies(pices.color):
+                    if self.Piece_Arr[possible_move_row][possible_move_col].empty_or_enemies(piece.color):
                         # create squares of the new move
                         initial = PiecePlace(row, column)
-                        final = PiecePlace(possible_move_row, possible_move_col) # piece=piece
+                        final = PiecePlace(possible_move_row, possible_move_col) 
                         # create new move
                         move = Move(initial, final)
-                        pices.append_move(move)
+                        piece.append_move(move)
 
-            
+            # castling moves
+            if not piece.moved:
+                
+                #left castling
+                left_rook = self.Piece_Arr[row][0].piece
+                print(left_rook)
+                if  isinstance(left_rook, Rook):
+                
+                    if not left_rook.moved:
+                        for c in range(1, 4):
+                            if self.Piece_Arr[row][c].has_piece():
+                                
+                                break
+
+                            if c == 3:
+                                
+                                piece.left_rook = left_rook
+
+                                # rook move
+                                initial = PiecePlace(row, 0)
+                                final = PiecePlace(row, 3)
+                                move = Move(initial, final)
+                                left_rook.append_move(move)
+
+                                # king move
+                                initial = PiecePlace(row, column)
+                                final = PiecePlace(row, 2)
+                                move = Move(initial, final)
+                                piece.append_move(move)
+                # right castling
+                right_rook = self.Piece_Arr[row][7].piece
+                if isinstance(right_rook, Rook):
+                    if not right_rook.moved:
+                        for c in range(5, 7):
+                            if self.Piece_Arr[row][c].has_piece():
+                                break
+
+                            if c == 6:
+                                piece.right_rook = right_rook
+
+                                # rook move
+                                initial = PiecePlace(row, 7)
+                                final = PiecePlace(row, 5)
+                                move = Move(initial, final)
+                                right_rook.append_move(move)
+
+                                # king move
+                                initial = PiecePlace(row, column)
+                                final = PiecePlace(row, 6)
+                                move = Move(initial, final)
+                                piece.append_move(move)
+                                
 #_______________pawn moves_________________#
 
     def pawn_possible_moves(self, piece ,row , column):
@@ -189,12 +290,59 @@ class Board:
                     # 3. append new move
 
                     initial_move = PiecePlace(row, column)
-                    final_move = PiecePlace(possible_move_row,possible_move_col)
+                    final_piece = self.Piece_Arr[possible_move_row][possible_move_col].piece
+                    final_move = PiecePlace(possible_move_row, possible_move_col, final_piece)
                     move = Move(initial_move,final_move)
 
                     piece.append_move(move)
+    
+# en passant moves
+        r = 3 if piece.color == 'white' else 4
+        fr = 2 if piece.color == 'white' else 5
+        # left en pessant
+        if self.in_board(column-1) and row == r:
+            if self.Piece_Arr[row][column-1].enemies_piece(piece.color):
+                p = self.Piece_Arr[row][column-1].piece
+                if isinstance(p, Pawn):
+                    if p.en_passant:
+                        # create initial and final move squares
+                        initial = PiecePlace(row, column)
+                        final = PiecePlace(fr, column-1, p)
+                        # create a new move
+                        move = Move(initial, final)
+                        
+                        
+                        piece.append_move(move)
+                        
+        
+        # right en pessant
+        if self.in_board(column+1) and row == r:
+            if self.Piece_Arr[row][column+1].enemies_piece(piece.color):
+                p = self.Piece_Arr[row][column+1].piece
+                if isinstance(p, Pawn):
+                    if p.en_passant:
+                        # create initial and final move squares
+                        initial = PiecePlace(row, column)
+                        final = PiecePlace(fr, column+1, p)
+                        # create a new move
+                        move = Move(initial, final)
+                        
+                        # check potencial checks
+                        
+                        piece.append_move(move)
+                        
+                            
+    def set_true_en_passant(self, piece):
+        
+        if not isinstance(piece, Pawn):
+            return
 
-
+        for row in range(8):
+            for col in range(8):
+                if isinstance(self.Piece_Arr[row][col].piece, Pawn):
+                    self.Piece_Arr[row][col].piece.en_passant = False
+        
+        piece.en_passant = True
 #_________________________________________
       
     def possible_moves(self, piece ,row , column):
@@ -247,7 +395,8 @@ class Board:
             self.pawn_possible_moves( piece ,row , column)
         if piece.name == "king":
             self.king_moves( piece ,row , column)
-        if piece.name == "rook":
+        
+        if piece.name == "rook":     # if isinstance(piece,Rock)
             
            straightline_moves([
               (-1, 0), # up
@@ -255,6 +404,7 @@ class Board:
                 (1, 0), # down
                 (0, -1), # left
            ])
+
         if piece.name == "bishop": 
             
            straightline_moves([
@@ -322,6 +472,8 @@ class Board:
         self.Piece_Arr[second_row][1] = PiecePlace(second_row, 1, Knight(color))
         self.Piece_Arr[second_row][6] = PiecePlace(second_row, 6, Knight(color))
         # self.Piece_Arr[3][3] = PiecePlace(3,3, Knight(color))
+
+
         # king
         self.Piece_Arr[second_row][4] = PiecePlace(second_row, 4, King(color))
         # self.Piece_Arr[5][3] = PiecePlace(5, 3, King(color))
