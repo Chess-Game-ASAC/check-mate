@@ -57,7 +57,7 @@ class Main:
           if board.Piece_Arr[row][col].has_piece():
             #check if it the valid piece (color) 
             if self.game.next_player==board.Piece_Arr[row][col].piece.color:
-              board.possible_moves(board.Piece_Arr[row][col].piece,row,col)
+              board.possible_moves(board.Piece_Arr[row][col].piece,row,col,bool=True)
               motion.save_piece(board.Piece_Arr[row][col].piece)
               self.game.show_background(self.screen)
               self.game.show_last_move(self.screen)
@@ -104,7 +104,7 @@ class Main:
                 game.show_pieces(self.screen)
                 # next turn
                 game.next_turn()
-            motion.piece.clear_moves()
+            # motion.piece.clear_moves()
           motion.delete_piece()
           
 
