@@ -108,6 +108,8 @@ class Main:
           motion.delete_piece()
           
 
+
+        # quite the check mate game  
         #4. restart the game  
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_r:
