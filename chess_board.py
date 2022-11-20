@@ -315,23 +315,17 @@ class Board:
         # queen
 
         self.Piece_Arr[second_row][3] = PiecePlace(second_row, 3, Queen(color))
-<<<<<<< HEAD
         # self.Piece_Arr[4][4] = PiecePlace(4, 4, Queen("white"))
-=======
         # self.Piece_Arr[5][7] = PiecePlace(4, 4, Queen("white"))
 
->>>>>>> 9aeb363f9c7d9d954021b477308eb8f693704cc6
         # knights
         self.Piece_Arr[second_row][1] = PiecePlace(second_row, 1, Knight(color))
         self.Piece_Arr[second_row][6] = PiecePlace(second_row, 6, Knight(color))
         # self.Piece_Arr[3][3] = PiecePlace(3,3, Knight(color))
         # king
         self.Piece_Arr[second_row][4] = PiecePlace(second_row, 4, King(color))
-<<<<<<< HEAD
         # self.Piece_Arr[5][3] = PiecePlace(5, 3, King(color))
-=======
         # self.Piece_Arr[4][4] = PiecePlace(4, 4, King(color))
->>>>>>> 9aeb363f9c7d9d954021b477308eb8f693704cc6
 
 
         # bishops
