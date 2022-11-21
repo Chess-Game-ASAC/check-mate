@@ -91,7 +91,7 @@ class Game:
     def show_checkmate(self,surface): 
 
         font = pygame.font.Font('8-BIT WONDER.TTF',30)
-        text_surface = font.render("you lost", True, "black")
+        text_surface = font.render("Game over", True, "black")
         text_rect = text_surface.get_rect()
         text_rect.center = (300,300)
         surface.blit(text_surface,text_rect)
