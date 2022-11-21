@@ -2,6 +2,8 @@
 from chess_piece import *
 from chess_move import * 
 import copy
+from sound import Sound
+
 
 class PiecePlace:
         def __init__(self,row,col,piece=None):
@@ -91,7 +93,10 @@ class Board:
                 # console board move update
                 self.Piece_Arr[initial.row][initial.col + diff].piece = None
                 self.Piece_Arr[final.row][final.col].piece = piece
-                
+                if not testing:
+                    sound = Sound(
+                        os.path.join('assets/sounds/capture.wav'))
+                    sound.play()
             
             # pawn promotion
             else:
