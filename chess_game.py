@@ -23,9 +23,9 @@ class Game:
             for col in range(8):
 
                 if (row+col)%2==0:
-                    color = (230, 186, 149) 
-                else :
                     color = (251, 250, 205) 
+                else :
+                    color = (230, 186, 149) 
                 
                 rect = (col*75,row*75,75,75) # tuple (x,y,W,H)
                 pygame.draw.rect(surface,color,rect)

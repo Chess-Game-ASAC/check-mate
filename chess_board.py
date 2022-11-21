@@ -165,8 +165,8 @@ class Board:
                             
                                 # append new move
                             pices.append_move(move)
-                        else :
-                            break
+                        # else :
+                        #     break
                     else:
                             # append new move
                         pices.append_move(move)
@@ -213,8 +213,8 @@ class Board:
                                 
                                     # append new move
                                 piece.append_move(move)
-                            else :
-                                break
+                            # else :
+                            #     break
                         else:
                                 # append new move
                             piece.append_move(move)
