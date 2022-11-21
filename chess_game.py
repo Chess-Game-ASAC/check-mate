@@ -1,7 +1,8 @@
 import pygame
 from chess_board import Board
 from motion import Motion
-
+from settings import*
+from config import Config
     
 class Game:
 
@@ -11,22 +12,18 @@ class Game:
         self.board=Board()
         self.motion=Motion()
         self.next_player="white"
-        
+        self.config = Config()
 
 
     def show_background(self ,surface):
 
         '''the function to draw the board'''
+        theme = self.config.theme
 
         for row in range(8):
 
             for col in range(8):
-
-                if (row+col)%2==0:
-                    color = (251, 250, 205) 
-                else :
-                    color = (230, 186, 149) 
-                
+                color = theme.bg.light if (row + col) % 2 == 0 else theme.bg.dark
                 rect = (col*75,row*75,75,75) # tuple (x,y,W,H)
                 pygame.draw.rect(surface,color,rect)
 
@@ -56,16 +53,15 @@ class Game:
         '''
         this method to show the possible move for each pieces 
         '''
+        theme = self.config.theme
+
         if self.motion.moving :
             piece = self.motion.piece
     #   "#e9ed11" 
             # loop all valid moves
             for move in piece.moves:
                 # color
-                if (move.end.row + move.end.col) % 2 == 0 :
-                    color="#FF8DC7"
-                else:
-                    color ="#FFADBC"                    
+                color = theme.moves.light if (move.end.row + move.end.col) % 2 == 0 else theme.moves.dark                  
                
                 # rect
                 rect = (move.end.col * 75, move.end.row * 75, 75, 75)
@@ -79,16 +75,24 @@ class Game:
             self.next_player="white"
 
     def show_last_move(self,surface):
+        theme = self.config.theme
         if self.board.last_move is not None:
             #color the start square
             strat_move=self.board.last_move.start
-            color="#AABBCC"
+            color = theme.trace.light
             rect = (strat_move.col * 75, strat_move.row * 75, 75, 75)
             pygame.draw.rect(surface, color, rect)
           #color the start square
             end_move=self.board.last_move.end
-            color="#89AACB"
+            theme.trace.dark
             rect = (end_move.col * 75, end_move.row * 75, 75, 75)
             pygame.draw.rect(surface, color, rect) # part of square ,width=6
+
+    def change_theme(self):
+        
+        self.config.change_theme()
+
     def reset(self):
         self.__init__()
+    
+    

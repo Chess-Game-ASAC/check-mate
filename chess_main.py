@@ -108,11 +108,17 @@ class Main:
             motion.piece.clear_moves()
           motion.delete_piece()
           
-
+         
+    
+            
 
         # quite the check mate game  
-        #4. restart the game  
+        #5. restart the game  
         elif event.type == pygame.KEYDOWN:
+          #  Key press
+            if event.key == pygame.K_a:
+             print("no theme")
+             game.change_theme()
             if event.key == pygame.K_r:
               game.reset()
               game = self.game
@@ -124,8 +130,10 @@ class Main:
               self.g.curr_menu.display_menu()
               self.g.game_loop()
 
+       
 
-        # 5 . quite the check mate game  
+
+        # 6 . quite the check mate game  
         elif event.type == pygame.QUIT:
           pygame.quit()
           sys.exit()
