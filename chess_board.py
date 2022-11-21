@@ -56,6 +56,7 @@ class Board:
         for col in range(8): # the for loob to create a 8 zeros for each columnn 
           self.Piece_Arr.append([0, 0, 0, 0, 0, 0, 0, 0])
         self.last_move=None
+        self.end=0
         self.draw_piece()
         self.add_pieces('white')
         self.add_pieces('black')
@@ -140,6 +141,18 @@ class Board:
                             return True
         
         return False
+    
+    def endgame(self,color):
+
+        for row in range(8):
+            for col in range(8):
+                if self.Piece_Arr[row][col].has_piece() and self.Piece_Arr[row][col].has_partners_piece(color):
+                    p = self.Piece_Arr[row][col].piece
+                    self.possible_moves( p ,row , col)
+                    if len (p.moves) >0 :
+                        return True
+        return False
+        
 #_______________knight moves_________________#
 
     def knight_possible_move(self, pices ,row , column,bool):
@@ -229,7 +242,6 @@ class Board:
                 
                 #left castling
                 left_rook = self.Piece_Arr[row][0].piece
-                print("hi")
                 if  isinstance(left_rook, Rook):
                 
                     if not left_rook.moved:
@@ -331,7 +343,6 @@ class Board:
 
                     if bool:
                         if not self.in_check(piece, move):
-                            print("hello")
                                 # append new move
                             piece.append_move(move)
                     else:
@@ -366,7 +377,6 @@ class Board:
 
                     if bool:
                         if not self.in_check(piece, move):
-                            print("hello")
                                 # append new move
                             piece.append_move(move)
                     else:
@@ -391,7 +401,6 @@ class Board:
                         
                         if bool:
                             if not self.in_check(piece, move):
-                                print("hello")
                                     # append new move
                                 piece.append_move(move)
                         else:
@@ -415,7 +424,6 @@ class Board:
                         
                         if bool:
                             if not self.in_check(piece, move):
-                                print("hello")
                                     # append new move
                                 piece.append_move(move)
                         else:

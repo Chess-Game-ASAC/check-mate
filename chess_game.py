@@ -41,15 +41,9 @@ class Game:
                 piece=self.board.Piece_Arr[row][col].piece  # saving that piece into a variable
 
                 if piece is not self.motion.piece:
-                   # print("11111",piece)
                    img = pygame.image.load(piece.image)
-                   # print("2222222",img)
                    img_center = col * 75 + 75 // 2, row * 75 + 75 // 2
-                   # print("333333333",img_center)
                    piece.image_rect = img.get_rect(center=img_center)
-                   # get_rect -> this is pygame method
-                   # print("4444444",piece.image_rect)
-                   # blit() is function in pygame to draw one image into another
                    surface.blit(img, piece.image_rect)
 
                 
@@ -93,7 +87,19 @@ class Game:
                 rect = (move.end.col * 75, move.end.row * 75, 75, 75)
                 # blit
                 pygame.draw.rect(surface, color, rect)
-    
+                
+    def show_checkmate(self,surface): 
+
+        font = pygame.font.Font('8-BIT WONDER.TTF',30)
+        text_surface = font.render("Game over", True, "black")
+        text_rect = text_surface.get_rect()
+        text_rect.center = (300,300)
+        surface.blit(text_surface,text_rect)
+        
+        # img = pygame.image.load(piece.image)
+        # img_center = col * 75 + 75 // 2, row * 75 + 75 // 2
+        # piece.image_rect = img.get_rect(center=img_center)
+        # surface.blit(img, piece.image_rect)
     def next_turn(self):
         if self.next_player=="white":
             self.next_player="black" 

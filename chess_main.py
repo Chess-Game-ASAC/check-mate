@@ -19,6 +19,9 @@ class Main:
     pygame.display.set_caption('Check Mate')     # add the title of the screen
     self.game=Game() 
     self.g=None
+    self.endGame=False
+
+
     
   def mainloop(self):
     """
@@ -33,9 +36,11 @@ class Main:
     board=self.game.board
     
     while True:
+
       motion=self.game.motion  #call the motion attribute in the game class which is object "Motion class"
       board=self.game.board  #call the board attribute in the game class which is object "Board class"
-      
+      board.end=0
+
       self.game.show_background(self.screen)  #display the board
       self.game.show_last_move(self.screen)
       self.game.show_possible_move(self.screen)
@@ -43,6 +48,11 @@ class Main:
       
       if motion.piece is not None and motion.M_col is not None and motion.M_row is not None:
         motion.update_screen(self.screen)
+      
+      if self.endGame:
+        if not board.endgame(self.game.next_player):
+          self.game.show_checkmate(self.screen)
+        
 
 
       for event in pygame.event.get():   #loop through the event
@@ -104,6 +114,11 @@ class Main:
                 game.show_background(self.screen)
                 game.show_last_move(self.screen)
                 game.show_pieces(self.screen)
+                p=board.Piece_Arr[released_row][released_col].piece
+                board.possible_moves(p,released_row,released_col, bool=True)
+                for m in p.moves:
+                  if isinstance(m.end.piece, King):
+                    self.endGame=True
                 # next turn
                 game.next_turn()
             motion.piece.clear_moves()
@@ -118,13 +133,13 @@ class Main:
         elif event.type == pygame.KEYDOWN:
           #  Key press
             if event.key == pygame.K_a:
-             print("no theme")
              game.change_theme()
             if event.key == pygame.K_r:
               game.reset()
               game = self.game
               motion=self.game.motion  
               board=self.game.board
+              self.endGame=False
             elif event.key == pygame.K_BACKSPACE:
               
               self.g=GameW()
