@@ -3,6 +3,7 @@ from chess_board import Board
 from motion import Motion
 from settings import*
 from config import Config
+from square import Square
     
 class Game:
 
@@ -29,6 +30,8 @@ class Game:
 
 
     def show_pieces(self,surface):
+        theme = self.config.theme
+        ROWS=8
 
         for row in range(8):
           for col in range(8):
@@ -48,6 +51,29 @@ class Game:
                    # print("4444444",piece.image_rect)
                    # blit() is function in pygame to draw one image into another
                    surface.blit(img, piece.image_rect)
+
+                
+
+                # row coordinates
+            if col == 0:
+                # color
+                color = theme.bg.dark if row % 2 == 0 else theme.bg.light
+                # label
+                lbl = self.config.font.render(str(8-row), 1, color)
+                lbl_pos = (5, 5 + row * 75)
+                # blit
+                surface.blit(lbl, lbl_pos)
+            # col coordinates
+            if row == 7:
+                # color
+                color = theme.bg.dark if (row + col) % 2 == 0 else theme.bg.light
+                # label
+                lbl = self.config.font.render(Square.get_alphacol(col), 1, color)
+                lbl_pos = (col * 75 + 75 - 20, 600 - 20)
+                # blit
+                surface.blit(lbl, lbl_pos)
+
+               
     
     def show_possible_move(self, surface):
         '''
@@ -91,6 +117,12 @@ class Game:
     def change_theme(self):
         
         self.config.change_theme()
+
+    def play_sound(self, captured=False):
+        if captured:
+            self.config.capture_sound.play()
+        else:
+            self.config.move_sound.play()
 
     def reset(self):
         self.__init__()

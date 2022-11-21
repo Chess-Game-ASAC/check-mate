@@ -1,5 +1,7 @@
 import os
 # import pygame
+from sound import Sound
+
 
 
 from settings import *
@@ -12,9 +14,9 @@ class Config:
         self._add_themes()
         self.idx = 0
         self.theme = self.themes[self.idx]
-        # self.font = pygame.font.SysFont('monospace', 18, bold=True)
+        self.font = pygame.font.SysFont('monospace', 18, bold=True)
         self.move_sound = Sound(
-            os.path.join('sounds\capture.wav'))
+            os.path.join('sounds\move.wav'))
         self.capture_sound = Sound(
             os.path.join('sounds\capture.wav'))
 

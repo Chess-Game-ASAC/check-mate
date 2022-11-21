@@ -100,6 +100,7 @@ class Main:
                 board.move(motion.piece, move)
                 board.set_true_en_passant(motion.piece)                            
                 # show methods
+                game.play_sound(captured)
                 game.show_background(self.screen)
                 game.show_last_move(self.screen)
                 game.show_pieces(self.screen)
