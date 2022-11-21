@@ -3,7 +3,7 @@ import sys  # this model is help to quit the application
 from chess_game import Game 
 from chess_move import Move
 from chess_board import *
-
+from game_menu import *
 
 class Main:
   """
@@ -18,6 +18,7 @@ class Main:
     
     pygame.display.set_caption('Check Mate')     # add the title of the screen
     self.game=Game() 
+    self.g=None
     
   def mainloop(self):
     """
@@ -104,7 +105,7 @@ class Main:
                 game.show_pieces(self.screen)
                 # next turn
                 game.next_turn()
-            # motion.piece.clear_moves()
+            motion.piece.clear_moves()
           motion.delete_piece()
           
 
@@ -117,13 +118,20 @@ class Main:
               game = self.game
               motion=self.game.motion  
               board=self.game.board
-        # 4. quite the check mate game  
+            elif event.key == pygame.K_BACKSPACE:
+              
+              self.g=GameW()
+              self.g.curr_menu.display_menu()
+              self.g.game_loop()
+
+
+        # 5 . quite the check mate game  
         elif event.type == pygame.QUIT:
           pygame.quit()
           sys.exit()
 
 
       pygame.display.update()   #should be the last line in the code to update the board
-
-main=Main()
-main.mainloop()
+if __name__=="__main__":
+  main=Main()
+  main.mainloop()
