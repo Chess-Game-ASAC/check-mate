@@ -1,6 +1,5 @@
 import pygame
 from Menu_System import MainMenu , Menu,rulesMenu,CreditsMenu
-from chess_main import *
 from chess_main import Main
 
 class GameW():
@@ -9,6 +8,7 @@ class GameW():
         self.main=None
         self.running = True  # true when the game is on
         self.playing = False
+        pygame.display.set_caption('Check Mate')
 
         # these var. for controls , to iterate throgh the menu , when player presses the up key this var. shold be set the true
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
@@ -29,8 +29,7 @@ class GameW():
         # if you want use the default font
         self.font_named = pygame.font.get_default_font() 
 
-        # self.BLACK = (241, 211, 179)
-        # self.WHITE = (139, 126, 116)
+       
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
         self.main_menu = MainMenu(self) #the game it pass itself as parameter in MainMenu
@@ -103,12 +102,8 @@ class GameW():
         text_rect.center = (x,y)
         self.display.blit(text_surface,text_rect)
     
-    def draw_image(self, path, x, y ):
-        bg = pygame.transform.scale(pygame.image.load(path), (100, 100))
+    def draw_image(self, path, x, y,s1=100,s2=100 ):
+        bg = pygame.transform.scale(pygame.image.load(path), (s1, s2))
         self.display.blit(bg, (x, y)) #location 
 
-        # img = pygame.image.load(path)                
-        # img_center = x, y
-        # self.display.blit(img, img.get_rect(center=img_center))
-         
-# pygame.event.get() -> this basically goes through a list of everything the player can do on the computer 
+
