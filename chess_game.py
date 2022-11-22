@@ -116,7 +116,7 @@ class Game:
             pygame.draw.rect(surface, color, rect)
           #color the start square
             end_move=self.board.last_move.end
-            theme.trace.dark
+            color=theme.trace.dark
             rect = (end_move.col * 75, end_move.row * 75, 75, 75)
             pygame.draw.rect(surface, color, rect) # part of square ,width=6
 

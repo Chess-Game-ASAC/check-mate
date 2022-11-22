@@ -8,6 +8,43 @@
 4. Abdalla Mosa
 5. Dina ALshboul
 
+## Problem domain:
+  **Create Check Mate game, which has a friendly game interface, and it's develops the mind, develops intellectual skills, provides entertainment, and fills the time with what benefits the mind.**
+  **The game will also provide a healthy competitive environment so that you can play with your friend.**
+
+## Domain Modeling
+![Modeling](./img/Domain%20Modeling.PNG)
+
+## Wireframes 
+![Wireframes ](./img/Wireframe.png)
+
+
+
+### Links and Resources
+[pygame library](https://www.geeksforgeeks.org/pygame-tutorial/)
+
+[Windows Installation](https://long-knight-f42.notion.site/Windows-Installation-4c49336378d74d068c1642aa2346fc35)
+
+[chess game source](https://ehmatthes.github.io/pcc_2e/beyond_pcc/pygame_sprite_sheets/)
+
+
+#### How to initialize/run your application (where applicable)
+ 1. clone the github repo
+ 2. do the wendows installation 
+ 3. pip install -r requirements.txt
+ 4. e.g.  run `main_menu.py` file 
+
+#### How to use your library (where applicable)
+   `pip install pygame`
+   [pygame library](https://www.geeksforgeeks.org/pygame-tutorial/)
+
+#### Tests
+
+- How do you run tests?
+ `pip install pytest` 
+  run `pytest` in the terminal 
+
+
 ## Team Agreement:
 
 ### Planning:
@@ -101,34 +138,3 @@
      every pull request  if it work correctly we will merge it .
   - How will you communicate that it's time to merge?
      discord 
-
-
-## Domain Modeling
-![Modeling](./img/Domain%20Modeling.PNG)
-
-## Wireframes 
-![Wireframes ](./img/Wireframes%20.png)
-
-
-
-### Links and Resources
-
-### Setup
-
-#### `.env` requirements (where applicable)
-
-i.e.
-
-- `PORT` - Port Number
-- `DATABASE_URL` - URL to the running Postgres instance/db
-
-#### How to initialize/run your application (where applicable)
- 1. pip install -r requirements.txt
- 2. e.g.  run `main.py` file 
-
-#### How to use your library (where applicable)
-
-#### Tests
-
-- How do you run tests? 
-  pytest
