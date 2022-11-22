@@ -144,11 +144,11 @@ class Main:
               motion=self.game.motion  
               board=self.game.board
               self.endGame=False
-            elif event.key == pygame.K_BACKSPACE:
+            # elif event.key == pygame.K_BACKSPACE:
               
-              self.g=GameW()
-              self.g.curr_menu.display_menu()
-              self.g.game_loop()
+            #   self.g=GameW()
+            #   self.g.curr_menu.display_menu()
+            #   self.g.game_loop()
 
        
 
