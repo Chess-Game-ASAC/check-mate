@@ -16,7 +16,7 @@
 ![Modeling](./img/Domain%20Modeling.PNG)
 
 ## Wireframes 
-![Wireframes ](./img/Wireframe.png)
+![Wireframes ](./img/wireframe.png)
 
 
 
