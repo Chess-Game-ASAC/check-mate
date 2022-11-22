@@ -13,7 +13,7 @@
   **The game will also provide a healthy competitive environment so that you can play with your friend.**
 
 ## Domain Modeling
-![Modeling](./img/Domain%20Modeling.PNG)
+![Modeling](./img/UML.PNG)
 
 ## Wireframes 
 ![Wireframes ](./img/wireframe.png)

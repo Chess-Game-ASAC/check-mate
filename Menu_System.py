@@ -51,7 +51,7 @@ class MainMenu(Menu):
             self.game.draw_text("Start Game", 20, self.startx , self.starty+135)
             self.game.draw_text("Rules", 20, self.rulesx, self.rulesy+135)
             self.game.draw_text("Game developer", 20, self.creditsx, self.creditsy+135)
-            self.game.draw_image( os.path.join("team_photo/image.jpeg"), self.game.DISPLAY_W / 2-180, self.game.DISPLAY_H / 2 - 200,350,270 )
+            self.game.draw_image( os.path.join("team_photo/image.jpeg"), self.game.DISPLAY_W / 2-160, self.game.DISPLAY_H / 2 - 200,300,270 )
             
             self.draw_cursor()
             self.blit_screen()
