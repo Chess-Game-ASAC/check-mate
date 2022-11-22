@@ -1,9 +1,5 @@
 import os
 # import pygame
-from sound import Sound
-
-
-
 from settings import *
 
 
