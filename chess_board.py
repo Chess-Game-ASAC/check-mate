@@ -2,7 +2,8 @@
 from chess_piece import *
 from chess_move import * 
 import copy
-from sound import Sound
+from settings import*
+
 
 
 class PiecePlace:
