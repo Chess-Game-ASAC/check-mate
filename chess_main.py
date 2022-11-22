@@ -119,6 +119,10 @@ class Main:
                 for m in p.moves:
                   if isinstance(m.end.piece, King):
                     self.endGame=True
+                    break
+                  else:
+                    self.endGame=False
+                  
                 # next turn
                 game.next_turn()
             motion.piece.clear_moves()
